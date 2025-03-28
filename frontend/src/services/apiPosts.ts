@@ -23,7 +23,7 @@ const api = ky.create({
           res["message"] == "Invalid access token"
         ) {
           await ky
-            .get("http://localhost:2000/auth/refreshToken", {
+            .get(`${import.meta.env.VITE_CLIENT_URL}/auth/refreshToken`, {
               credentials: "include",
             })
             .json();

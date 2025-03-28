@@ -26,7 +26,7 @@ interface Res {
 }
 
 const api = ky.create({
-  prefixUrl: import.meta.env.Client_Url,
+  prefixUrl: import.meta.env.VITE_CLIENT_URL,
   hooks: {
     afterResponse: [
       async (_request, _options, response) => {
@@ -36,7 +36,7 @@ const api = ky.create({
           res["message"] == "Invalid access token"
         ) {
           await ky
-            .get("http://localhost:2000/auth/refreshToken", {
+            .get(`${import.meta.env.VITE_CLIENT_URL}/auth/refreshToken`, {
               credentials: "include",
             })
             .json();
@@ -48,10 +48,11 @@ const api = ky.create({
   },
 });
 export async function signIn({ email, password }: signInProps) {
-  const res = await ky.post<User>("http://localhost:2000/auth/login", {
+  const res = await api.post<User>("auth/login", {
     json: { email, password },
     credentials: "include",
   });
+  console.log(res);
 
   const data = await res.json();
   return data;
@@ -63,7 +64,7 @@ export async function signUp({
   password,
   confirmPassword,
 }: signUpProps) {
-  const res = ky.post("http://localhost:2000/auth/register", {
+  const res = api.post("auth/register", {
     json: { email, name, password, confirmPassword },
     credentials: "include",
   });

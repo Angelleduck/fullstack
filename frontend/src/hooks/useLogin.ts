@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../services/apiAuth";
 import { useNavigate } from "react-router-dom";
+import { queryClient } from "../main";
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export function useLogin() {
     mutationKey: ["user"],
     mutationFn: signIn,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
       navigate("/", { replace: true });
     },
   });
