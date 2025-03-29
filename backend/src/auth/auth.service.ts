@@ -82,7 +82,7 @@ export class AuthService {
         httpOnly: true,
         secure: false,
         maxAge: 1000 * 60 * 60 * 24 * 30,
-        path: '/auth/refreshToken',
+        path: '/refreshToken',
       });
 
     delete user.password;

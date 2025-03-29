@@ -46,7 +46,9 @@ export class AuthController {
   ) {
     //check if request token exist
     const refreshToken: refreshToken = req.cookies.refreshToken;
+    const accessToken: refreshToken = req.cookies.accessToken;
     console.log(refreshToken);
+    console.log(accessToken);
 
     if (!refreshToken) {
       throw new HttpException('refresh token missing', HttpStatus.UNAUTHORIZED);
